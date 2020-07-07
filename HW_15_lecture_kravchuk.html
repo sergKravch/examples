@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+	
+	//link
+	//https://github.com/hillel-front-end/front-end-pro-2019-may/tree/master/lections/lection_15_OOP_practice/homework
+	
+        function SuperArray(n, m, options){
+            var arr = new Array(n);
+
+            for (var i = 0; i < n; i++){
+                arr[i] = new Array(m);
+                for(var j = 0; j < m; j++){
+                    arr[i][j] = Math.ceil(Math.random() * (options.max - options.min) + options.min);
+                }
+            }
+
+            this.mass = arr;
+
+            this.clear = function (direction, k){
+                if( direction === 'row'){
+                    //console.log('direction ', direction);
+                    for(let i = 0; i < this.mass.length; i++){
+                        this.mass[k][i] = 0;
+                    }
+                } else if(direction === 'column'){
+                    for(let i = 0; i < this.mass.length; i++){
+                        this.mass[i][k] = 0;
+                    }
+                }
+			}
+			
+            this.setMarker = function (obj){
+				if(!obj || obj.x > this.mass.length || obj.y > this.mass[0].length || obj.x < 0 || obj.y < 0){
+					document.write('NO coordinates' + '<br>');
+				} else{
+					this.temp = this.mass[obj.x][obj.y];
+					this.oldx = obj.x;
+					this.oldy = obj.y;
+					this.mass[obj.x][obj.y] = "&";
+					// console.log('setMarker obj.x, obj.y ', obj.x, obj.y);
+					// console.log('setMarker this.temp ', this.temp);
+				}
+            }
+			
+            this.goTo = function (obj){
+                if(!obj || obj.x > this.mass.length || obj.y > this.mass[0].length || obj.x < 0 || obj.y < 0){
+					document.write('NO coordinates' + '<br>');
+				} else{
+					this.mass[this.oldx][this.oldy] = this.temp;
+					this.temp = this.mass[obj.x][obj.y];
+					this.oldx = obj.x;
+					this.oldy = obj.y;
+					this.mass[obj.x][obj.y] = "&";
+					// console.log('goTo obj.x, obj.y ', obj.x, obj.y);
+					// console.log('goTo this.temp ', this.temp);
+				}
+            }
+			
+            this.shift = function (direction){
+				console.log('this ', this.oldx !== this.mass[0].length - 1);
+				switch(direction){
+					case 'left':
+						if(this.oldy !== 0 && this.hasOwnProperty('temp')){
+							this.mass[this.oldx][this.oldy] = this.temp;
+							this.oldy = this.oldy - 1;
+							this.mass[this.oldx][this.oldy] = '&';
+						}
+					break;
+					
+					case 'top':
+						if(this.oldx !== 0 && this.hasOwnProperty('temp')){
+							this.mass[this.oldx][this.oldy] = this.temp;
+							this.oldx = this.oldx - 1;
+							this.mass[this.oldx][this.oldy] = '&';
+						}
+					break;
+					
+					case 'right':
+						if(this.oldy !== this.mass.length - 1 && this.hasOwnProperty('temp')){
+							this.mass[this.oldx][this.oldy] = this.temp;
+							this.oldy = this.oldy + 1;
+							this.mass[this.oldx][this.oldy] = '&';
+						}
+					break;
+					
+					case 'bottom':
+						if(this.oldx !== this.mass[0].length - 1 && this.hasOwnProperty('temp')){
+							this.mass[this.oldx][this.oldy] = this.temp;
+							this.oldx = this.oldx + 1;
+							this.mass[this.oldx][this.oldy] = '&';
+						}
+					break;
+				}
+					
+            }
+        }
+
+        SuperArray.prototype.render = function (separator){
+            for(let i = 0; i < this.mass.length; i++){
+                document.write(this.mass[i] + '<br>');
+            }
+			document.write(separator + '<br>');
+        }
+
+        var newArr = new SuperArray(10,10,{min: 10, max: 50});
+
+        console.log(newArr);
+        newArr.render('___');
+
+        newArr.clear('row', 1);
+		newArr.render('___');
+		newArr.setMarker({x: 0, y: 0});
+		newArr.render('___');
+		console.log(newArr);
+		newArr.goTo({x: 0, y: 11});
+		newArr.render('___');
+		console.log(newArr);
+		newArr.shift('top');
+		newArr.render('___');
+		console.log(newArr);
+    </script>
+</body>
+</html>

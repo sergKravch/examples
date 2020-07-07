@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+	
+	//link
+	//https://github.com/hillel-front-end/front-end-pro-2019-may/tree/master/lections/lection_15_OOP_practice/homework
+		
+		function createField(width, height){
+			arr = new Array(width);
+
+			for (var i = 0; i < width; i++){
+				arr[i] = new Array(height);
+				for(var j = 0; j < height; j++){
+					arr[i][j] = 0;
+				}
+			}
+
+			return arr;
+		}
+
+        function Field(width, height){
+			createField(width, height);
+			mass = arr;
+		}
+
+		Field.prototype.renderField = function (){
+			document.write('<hr>');
+			for(let i = 0; i < mass.length; i++){
+				document.write(mass[i] + '<br>');
+			}
+			document.write('<hr>');
+		}
+
+		Field.prototype.changeSize = function (newX, newY){
+			createField(newX, newY);
+			mass = arr;
+		}
+
+		Field.prototype.clearField = function(){
+			createField(width, height);
+			mass = arr;
+		}
+
+
+		function Person(name, XPosition, YPosition){
+			this.start = function (){
+				mass[XPosition][YPosition] = '1';
+				this.oldX = XPosition;
+				this.oldY = YPosition;
+			}
+
+			this.resetPosition = function (){
+				createField(mass.length,mass.length);
+				mass = arr;
+				mass[0][0] = '1';
+				this.oldX = 0;
+				this.oldY = 0;
+			}
+
+			this.go = function (direction, step){
+				
+				switch(direction){
+					case 'left':
+						if(this.oldY !== 0 && step < mass[0].length && step > 0){
+							let temp = this.oldY - step;
+							if(temp <= 0){
+								mass[this.oldX][0] = 1;
+								mass[this.oldX][this.oldY] = 0;
+								this.oldY = 0;
+							} else {
+								mass[this.oldX][temp] = 1;
+								mass[this.oldX][this.oldY] = 0;
+								this.oldY = temp;
+							}
+						}
+					break;
+					
+					case 'top':
+						if(this.oldX !== 0 && step < mass[0].length && step > 0){
+							let temp = this.oldX - step;
+							if(temp <= 0){
+								mass[0][this.oldY] = 1;
+								mass[this.oldX][this.oldY] = 0;
+								this.oldX = 0;
+							} else {
+								mass[temp][this.oldY] = 1;
+								mass[this.oldX][this.oldY] = 0;
+								this.oldX = temp;
+							}
+						}
+					break;
+					
+					case 'right':
+						if(this.oldY !== mass.length - 1 && step < mass[0].length && step > 0){
+							let temp = this.oldY + step;
+							if(temp > mass.length - 1){
+								mass[this.oldX][mass.length - 1] = 1;
+								mass[this.oldX][this.oldY] = 0;
+								this.oldY = mass.length - 1;
+							} else {
+								mass[this.oldX][temp] = 1;
+								mass[this.oldX][this.oldY] = 0;
+								this.oldY = temp;
+							}
+						}
+					break;
+					
+					case 'bottom':
+						if(this.oldX !== mass.length - 1 && step < mass[0].length && step > 0){
+							let temp = this.oldX + step;
+							if(temp > mass.length - 1){
+								mass[mass.length - 1][this.oldY] = 1;
+								mass[this.oldX][this.oldY] = 0;
+								this.oldX = mass.length - 1;
+							} else {
+								mass[temp][this.oldY] = 1;
+								mass[this.oldX][this.oldY] = 0;
+								this.oldX = temp;
+							}
+						}
+					break;
+				}
+			}
+		}
+
+		var newField = new Field(10, 10);
+		var person = new Person('mf', 6, 3);
+		Person.prototype = Object.create(newField);
+
+		newField.renderField();
+		person.start();
+		// newField.renderField();
+		person.go('left', 2);
+		person.go('top', 1);
+		newField.renderField();
+    </script>
+</body>
+</html>

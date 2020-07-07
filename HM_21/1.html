@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<title>Document</title>
+	<style>
+			body{
+				margin: 0;
+				box-sizing: border-box;
+				position: relative;
+				height: 100vh;
+				padding: 30px 20px;
+			}
+			.container{
+				position: relative;
+				width: 100%;
+				height: 100%;
+				box-sizing: border-box;
+			}
+			.box-wrap{
+				position: relative;
+				width: 60%;
+				margin: 0 auto;
+				display: flex;
+				align-items: center;
+				justify-content: flex-start;
+				margin: 30px 15px;
+				padding: 15px 10px;
+				box-shadow: 0px 0px 2px 2px rgba(0,0,0,0.75);
+			}
+
+			.box-counter-text{
+				margin-left: 15px;
+				font-size: 20px;
+				color: #000;	
+			}
+			.modal-container{
+				display: none;
+				position: absolute;
+				top: 50%;
+				left: 50%;
+				transform: translate(-50%,-50%);
+				width: 300px;
+				height: 300px;
+				background: #e6e6e6;
+				z-index: 2;
+				padding: 10px;
+			}
+			.modal-container.active{
+				display: block;
+			}
+			.main-list, .inner-item{
+				list-style: none;
+				padding: 0;
+				margin: 0;
+			}
+			.inner-item{
+				padding: 5px;
+				line-height: 25px;
+				color: #000;
+				display: block;
+				border-bottom: 1px solid red;
+			}
+			.inner-item:last-child{
+				border-bottom: none;
+			}
+			.list-id{
+				font-weight: bold;
+			}
+			.modal-close{
+				position: absolute;
+				top: 15px;
+				right: 15px;
+				font-size: 18px;
+				font-weight: bold;
+				cursor: pointer;
+				display: flex;
+				align-items: center;
+				justify-content: center;
+				width: 20px;
+				height: 20px;
+			}
+			
+		</style>
+	</head>
+	<body>
+		<div class="container">
+			<div class="box-wrap">
+				<div class="box-btn-plus">
+					<button type="button" class="btn-plus" value="Click">Click</button>
+				</div>
+				<div class="box-counter-text" id="first">0</div>
+			</div>
+			<div class="box-wrap">
+				<div class="box-btn-plus">
+					<button type="button" class="btn-plus" value="Click">Click</button>
+				</div>
+				<div class="box-counter-text" id="second">0</div>
+			</div>
+			<div>
+				<button type="button" class="clear-count" value="Clear">Clear</button>
+			</div>
+			<div style="margin-top: 20px">
+				<button type="button" class="set-count" value="Clear">Set Counter</button>
+			</div>
+		</div>
+		<div class="modal-container">
+			<span class="modal-close">X</span>
+			<button class="modal-btn-set" value="Set new Count">Set new Count</button>
+		</div>
+		<script src="js/scripts.js"></script>
+	</body>
+</html>

@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+</head>
+<body>
+	<script>
+	
+	// link 
+	// https://github.com/hillel-front-end/front-end-pro-2019-may/tree/master/lections/lection_8_practice_object/homework
+		
+		// Lecture
+		// ========= 1
+		var obj = { 
+				x: 10, 
+				y: 20, 
+				inner: { 
+					x: 20, 
+					z: 30 
+				}, 
+				foo2: { 
+					k: 23, 
+					p: 13,
+					foo3: {
+						s: 1101,
+						x: 111
+					} 
+				} 
+			}; 
+		
+		
+		function convert(obj){		
+			var newObj = {};
+			for (let key in obj){
+				if (typeof obj[key] === 'object'){
+					var tempObj = convert(obj[key]);
+					for(var newKey in tempObj){
+						newObj[newKey] = tempObj[newKey];
+					}
+				} else {
+					newObj[key] = obj[key];
+				}
+			}
+			return newObj;
+		}
+
+		console.log('convert ', convert(obj));
+
+		// ========= 4
+		function getPerson(name, from, to) {
+			var age = Math.ceil(Math.random() * (to - from) + from);
+			
+			var person = {
+				name: name + age, 
+				age: age
+			}
+			
+			return person;
+		}
+
+		console.log(Object.keys(getPerson('name', 10, 30)));
+		
+		function returnPersons(name, from, to){
+			var arr = [], average = 0, oldest = 0, sameArr = [], library = new Object();
+			for(let i = 0; i < 5; i++){
+				var temp = getPerson(name, from, to),
+					tempName = temp.name;
+				if(temp.name in library) {
+					sameArr.push(temp);
+				} else {
+					library[temp.name] = temp;
+				}
+				
+				arr.push(temp);
+				
+				average += temp.age / 5;
+							
+				if(!i){
+					oldest = temp.age;
+				} else if (temp.age > oldest) {
+					oldest = temp.age;
+				}
+			}
+
+			console.log('library ', library);						
+			console.log('arr ', arr, '\n', 'average ', average, '\n', 'oldest ', oldest);
+			console.log('sameArr ', sameArr);
+			return sameArr;
+		}
+		
+		returnPersons('Alyosha', 10, 15);
+		
+		//practice 
+		// ============ 1
+		function inArray(str, arr){		 
+			return arr.indexOf(str) === -1 ? false : true;
+		}
+		
+		console.log('inArray ', inArray('hello', ['hello', 'darkness', 'my', 'old', 'friend']));
+		
+		// ============== 2 and 3 and lecture 2 and 3
+		
+		function assignObjects(){
+			var newObj = {}, 
+				flag = arguments[arguments.length - 1] === true;
+			for(let i = 0; i < arguments.length; i++){
+				for (let key in arguments[i]){
+					if(flag && key in newObj) continue
+					else {
+						newObj[key] = arguments[i][key]
+					}
+				}
+			}
+			return newObj;
+		}
+		console.log(assignObjects({x:10, y:33}, {z:20, y:150}, {x:0, q:11}, {a:99, x:111}, true)); 
+		
+	</script>
+</body>
+</html>
